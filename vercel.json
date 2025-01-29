@@ -1,5 +1,12 @@
 {
+    "env": {
+      "NODE_VERSION": "18" 
+    },
+    "build": {
+        "installCommand": "npm install --force"
+      },
     "builds": [
+        
       {
         "src": "package.json",
         "use": "@vercel/node",
