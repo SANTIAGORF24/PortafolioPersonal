@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at 50% 50%, rgb(32, 40, 78), rgb(0, 0, 0));
+  overflow-y: scroll; /* Siempre habilita el desplazamiento */
+  scrollbar-width: none; /* Para Firefox */
+  /* Puedes ajustar el color del texto según tus necesidades */
+}
+/* Para ocultar solo la barra de desplazamiento vertical */
+
+/* Para navegadores basados en Webkit (Chrome, Safari) */
+::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-up {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up var(--duration) var(--delay) forwards;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left var(--duration) var(--delay) forwards;
+}
+
+.animate-scale-up {
+  animation: scale-up var(--duration) var(--delay) forwards;
+}
+
+.animate-delay-200 {
+  --delay: 200ms;
+}
+
+.animate-delay-700 {
+  --delay: 700ms;
+}
+
+.animate-delay-900 {
+  --delay: 900ms;
+}
+
+.animate-delay-1100 {
+  --delay: 1100ms;
+}
+
+.animate-delay-1300 {
+  --delay: 1300ms;
+}
+
+.animate-duration-700 {
+  --duration: 700ms;
+}
+
+.animate-duration-1000 {
+  --duration: 1000ms;
+}
+
+.animate-fill-forwards {
+  animation-fill-mode: forwards;
+}
