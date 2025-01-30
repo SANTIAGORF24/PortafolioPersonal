@@ -59,7 +59,7 @@ export function Principal_text() {
       {/* Íconos de redes sociales */}
       <div className="flex space-x-6 md:space-x-12 mb-12">
         <a
-          href="www.linkedin.com/in/santiago-ramírez-forero"
+          href="https://www.linkedin.com/in/santiago-ramírez-forero"
           className="text-white hover:text-gray-300 transition-colors animate-slide-in-left opacity-0 animate-delay-700 animate-duration-700 animate-fill-forwards"
         >
           <Linkedin size={32} />

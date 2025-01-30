@@ -4,22 +4,19 @@ import { Card, CardBody, Button } from "@heroui/react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef } from "react";
 import { Home } from "lucide-react";
-import Projects from "@/components/Home/Projects"; // Importamos el componente
+import Projects from "@/components/Home/Projects";
 import dynamic from "next/dynamic";
 import ExperienceEducation from "@/components/Home/ExperienceEducation";
-import ContactSection from "@/components/Home/ContactSection"; // Importamos el componente
-import AboutMeSection from "@/components/Home/AboutMeSection"; // Importamos el componente
+import ContactSection from "@/components/Home/ContactSection";
+import AboutMeSection from "@/components/Home/AboutMeSection";
 
-// Dynamic import of Lottie
 const Lottie = dynamic(() => import("react-lottie"), { ssr: false });
-
-// Import animation data directly
 import animationData from "../../public/assets/docs/Pato.json";
 
 const MenuGrid = ({ onHomeClick }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
-  const [activeView, setActiveView] = useState("menu"); // Estado para cambiar de vista
+  const [activeView, setActiveView] = useState("menu");
 
   const menuItems = [
     {
@@ -85,17 +82,17 @@ const MenuGrid = ({ onHomeClick }) => {
   };
 
   const handleExit = (nextView) => {
-    setActiveView("exiting"); // Activar animación de salida
-    setTimeout(() => setActiveView(nextView), 500); // Esperar la animación antes de cambiar de vista
+    setActiveView("exiting");
+    setTimeout(() => setActiveView(nextView), 500);
   };
 
   const handleHomeClick = () => {
-    setActiveView("exitingHome"); // Activar animación de salida para el botón Home
+    setActiveView("exitingHome");
     setTimeout(() => {
-      setActiveView("menu"); // Volver al menú después de la animación
-      onHomeClick(); // Llamamos a la función pasada como prop
-      setActiveView("menu"); // Asegurarse de que el estado se restablezca
-    }, 500); // Duración de la animación de salida
+      setActiveView("menu");
+      onHomeClick();
+      setActiveView("menu");
+    }, 500);
   };
 
   const lottieOptions = {
@@ -107,7 +104,6 @@ const MenuGrid = ({ onHomeClick }) => {
     },
   };
 
-  // Client-side only Lottie component
   const LottieAnimation = () => {
     if (typeof window === "undefined") return null;
 
@@ -119,13 +115,12 @@ const MenuGrid = ({ onHomeClick }) => {
   };
 
   return (
-    <div className="relative">
-      {/* Botón de casa siempre visible */}
+    <div className="relative pt-20">
       <AnimatePresence>
         {activeView !== "projects" &&
           activeView !== "experienceEducation" &&
           activeView !== "contact" &&
-          activeView !== "aboutMe" && ( // Añadimos la condición para ocultar el botón en AboutMeSection
+          activeView !== "aboutMe" && (
             <motion.button
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -147,18 +142,22 @@ const MenuGrid = ({ onHomeClick }) => {
             animate="visible"
             exit="exit"
             variants={containerVariants}
-            className="w-full max-w-4xl mx-auto p-6 h-dvh flex justify-center items-center"
+            className="w-full max-w-4xl mx-auto p-6 min-h-[calc(100dvh-5rem)] flex justify-center items-center"
           >
-            <div className="grid grid-cols-2 gap-6" id="menu">
+            <div
+              className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full"
+              id="menu"
+            >
               {menuItems.map((item, index) => (
                 <motion.div
                   key={index}
                   variants={itemVariants}
                   whileHover="hover"
                   exit="exit"
+                  className="h-full"
                 >
-                  <Card className="bg-black/20 backdrop-blur-md border border-white/10 hover:bg-black/30 transition-all duration-300 overflow-hidden">
-                    <CardBody className="flex flex-col items-center justify-center p-8 text-center">
+                  <Card className="bg-black/20 backdrop-blur-md border border-white/10 hover:bg-black/30 transition-all duration-300 overflow-hidden h-full">
+                    <CardBody className="flex flex-col items-center justify-center p-8 text-center h-full">
                       <motion.div
                         initial={{ scale: 0 }}
                         animate={isInView ? { scale: 1 } : { scale: 0 }}
@@ -199,6 +198,7 @@ const MenuGrid = ({ onHomeClick }) => {
                             : { opacity: 0, y: 20 }
                         }
                         transition={{ delay: 0.6 + index * 0.1 }}
+                        className="mt-auto"
                       >
                         <Button
                           onClick={() => {
@@ -209,7 +209,7 @@ const MenuGrid = ({ onHomeClick }) => {
                             if (item.title === "Contáctame")
                               handleExit("contact");
                             if (item.title === "Sobre Mí")
-                              handleExit("aboutMe"); // Añadimos la condición para "Sobre Mí"
+                              handleExit("aboutMe");
                           }}
                           className="bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all duration-300"
                         >
