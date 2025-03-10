@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ExternalLink, Github } from "lucide-react";
+import { ArrowLeft, ExternalLink, Github, Play, Image } from "lucide-react";
 import { Card, CardBody } from "@heroui/react";
 import MenuGrid from "./MenuGrid";
 import dynamic from "next/dynamic";
@@ -15,8 +15,39 @@ import animationData from "../../public/assets/docs/Pato.json";
 const Projects = ({ onHomeClick }) => {
   const [isExiting, setIsExiting] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [showGallery, setShowGallery] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const projects = [
+    {
+      title: "Agente IA Hospital",
+      description:
+        "Agente de IA por chat para el sector hospitalario que permite validar la existencia de usuarios, verificar citas médicas, agendar nuevas citas y gestionar cancelaciones. Integrado con Telegram, el bot puede recibir y procesar tanto mensajes de texto como notas de voz. Incluye sistema de notificaciones por correo electrónico para mantener informados a los pacientes. Desarrollado utilizando n8n para automatizaciones, APIs de Google Cloud Platform y GPT-01 mini, optimizado para funcionar con la API de Telegram.",
+      image: "/assets/img/agente.png",
+      github: "https://github.com/SANTIAGORF24/hospital-ai-agent",
+      live: "https://youtu.be/7MhUYKG6iHc",
+      gallery: [
+        "/assets/img/tool1.png",
+        "/assets/img/tool2.png",
+        "/assets/img/tool3.png",
+        "/assets/img/tool4.png",
+        "/assets/img/tool5.png",
+        "/assets/img/tool6.png",
+      ],
+      video: "https://youtu.be/7MhUYKG6iHc",
+      tags: [
+        "Inteligencia Artificial",
+        "Telegram Bot",
+        "n8n",
+        "Google Cloud",
+        "GPT-01 mini",
+        "Reconocimiento de Voz",
+        "API Integration",
+        "Healthcare",
+        "Notificaciones Email",
+      ],
+    },
     {
       title: "Mintickets",
       description:
@@ -150,6 +181,33 @@ const Projects = ({ onHomeClick }) => {
     );
   };
 
+  const openGallery = (project) => {
+    setSelectedProject(project);
+    setShowGallery(true);
+    setCurrentImageIndex(0);
+  };
+
+  const closeGallery = () => {
+    setShowGallery(false);
+    setSelectedProject(null);
+  };
+
+  const nextImage = () => {
+    if (selectedProject) {
+      setCurrentImageIndex((prev) =>
+        prev === selectedProject.gallery.length - 1 ? 0 : prev + 1
+      );
+    }
+  };
+
+  const prevImage = () => {
+    if (selectedProject) {
+      setCurrentImageIndex((prev) =>
+        prev === 0 ? selectedProject.gallery.length - 1 : prev - 1
+      );
+    }
+  };
+
   return (
     <AnimatePresence mode="wait">
       {!isExiting && (
@@ -222,7 +280,7 @@ const Projects = ({ onHomeClick }) => {
                       ))}
                     </div>
 
-                    <div className="flex gap-4 mt-auto">
+                    <div className="flex flex-wrap gap-4 mt-auto">
                       {project.title === "Mintickets" ? (
                         <div className="relative">
                           <motion.button
@@ -274,6 +332,7 @@ const Projects = ({ onHomeClick }) => {
                           </motion.a>
                         )
                       )}
+
                       <motion.a
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -287,12 +346,158 @@ const Projects = ({ onHomeClick }) => {
                           ? "Explicación"
                           : "Demo"}
                       </motion.a>
+
+                      {project.gallery && (
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => openGallery(project)}
+                          className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg transition-colors"
+                        >
+                          <Image size={20} />
+                          Galería
+                        </motion.button>
+                      )}
+
+                      {project.video && (
+                        <motion.a
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          href={project.video}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg transition-colors"
+                        >
+                          <Play size={20} />
+                          Video
+                        </motion.a>
+                      )}
                     </div>
                   </CardBody>
                 </Card>
               </motion.div>
             ))}
           </motion.div>
+
+          {/* Image Gallery Modal */}
+          {showGallery && selectedProject && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+              onClick={closeGallery}
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                className="bg-black/50 p-4 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-white text-xl font-bold">
+                    {selectedProject.title} - Galería
+                  </h3>
+                  <button
+                    onClick={closeGallery}
+                    className="text-white hover:text-gray-300"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  </button>
+                </div>
+
+                <div className="relative">
+                  <div className="h-[60vh] overflow-hidden rounded-lg">
+                    <img
+                      src={selectedProject.gallery[currentImageIndex]}
+                      alt={`${selectedProject.title} screenshot ${
+                        currentImageIndex + 1
+                      }`}
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+
+                  <button
+                    onClick={prevImage}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 p-2 rounded-full"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                  </button>
+
+                  <button
+                    onClick={nextImage}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 p-2 rounded-full"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                  </button>
+                </div>
+
+                <div className="flex justify-center mt-4">
+                  <p className="text-white">
+                    {currentImageIndex + 1} / {selectedProject.gallery.length}
+                  </p>
+                </div>
+
+                <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
+                  {selectedProject.gallery.map((img, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentImageIndex(idx)}
+                      className={`flex-shrink-0 h-16 w-24 rounded overflow-hidden border-2 ${
+                        currentImageIndex === idx
+                          ? "border-blue-500"
+                          : "border-transparent"
+                      }`}
+                    >
+                      <img
+                        src={img}
+                        alt={`Thumbnail ${idx + 1}`}
+                        className="h-full w-full object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
 
           <LottieAnimation />
         </div>
