@@ -70,16 +70,16 @@ const ExperienceEducation = ({ onHomeClick }) => {
       ],
     },
     {
-      title: "Diseñador Multimedia y Técnico de Soporte",
+      title: "Desarrollador Frontend",
       company: "Colegio Nacional de Curadores Urbanos",
       period: "Ene 2022 - Jun 2023",
       responsibilities: [
-        "Creación de contenido multimedia",
-        "Diseño de materiales promocionales",
-        "Desarrollo de guías técnicas",
-        "Soporte técnico integral",
+        "Desarrollo y mantenimiento de la página web institucional",
+        "Implementación de nuevas funcionalidades y mejoras en la plataforma",
+        "Optimización de la experiencia del usuario",
+        "Actualización y ajustes del sitio web para asegurar su correcto funcionamiento",
       ],
-      techStack: ["Adobe Creative Suite", "Diseño Web", "Soporte Técnico"],
+      techStack: ["HTML", "CSS", "JavaScript", "WordPress"],
     },
   ];
 
